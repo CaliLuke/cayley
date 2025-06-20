@@ -60,8 +60,12 @@ func main() {
 		if bytes.Equal(line, []byte(placeholder)) {
 			writeDocs(w, dp)
 		} else {
-			w.Write(line)
-			w.Write([]byte("\n"))
+			if _, err := w.Write(line); err != nil {
+				panic(err)
+			}
+			if _, err := w.Write([]byte("\n")); err != nil {
+				panic(err)
+			}
 		}
 	}
 }

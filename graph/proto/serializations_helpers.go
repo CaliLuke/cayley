@@ -23,7 +23,7 @@ func (m *NodeData) GetNativeValue() quad.Value {
 
 func (m *NodeData) Upgrade() {
 	if m.Value == nil {
-		m.Value = pquads.MakeValue(quad.Raw(m.Name))
+		m.Value = pquads.MakeValue(quad.IRI(m.Name))
 		m.Name = ""
 	}
 }

@@ -29,7 +29,9 @@ type readCloser struct {
 func (r readCloser) Close() error {
 	err := r.ReadCloser.Close()
 	if r.close != nil {
-		r.close()
+		if err := r.close(); err != nil {
+			clog.Errorf("failed to close reader: %v", err)
+		}
 	}
 	return err
 }

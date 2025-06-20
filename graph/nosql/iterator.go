@@ -237,17 +237,6 @@ func (qs *QuadStore) newIteratorContains(collection string, constraints []nosql.
 	}
 }
 
-func (it *iteratorContains) makeIterator(ctx context.Context) nosql.DocIterator {
-	q := it.qs.db.Query(it.collection)
-	if len(it.constraint) != 0 {
-		q = q.WithFields(it.constraint...)
-	}
-	if it.limit > 0 {
-		q = q.Limit(int(it.limit))
-	}
-	return q.Iterate(ctx)
-}
-
 func (it *iteratorContains) Close() error {
 	if it.iter != nil {
 		return it.iter.Close()

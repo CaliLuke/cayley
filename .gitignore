@@ -16,3 +16,5 @@ cayley.json
 packrd/packed-*
 # The build binary
 /cayley
+AI
+.gitignore

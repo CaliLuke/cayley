@@ -788,7 +788,8 @@ func TestDeletedFromIterator(t testing.TB, gen testutil.DatabaseFunc, conf *Conf
 		quad.Make("E", "follows", "F", nil),
 	}, false)
 
-	w.RemoveQuad(quad.Make("E", "follows", "F", nil))
+	err = w.RemoveQuad(quad.Make("E", "follows", "F", nil))
+	require.NoError(t, err)
 
 	ExpectIteratedQuads(t, qs, it, nil, false)
 }

@@ -283,7 +283,11 @@ func mustSetupProfile(cmd *cobra.Command) profileData {
 			os.Exit(1)
 		}
 		p.cpuProfile = f
-		pprof.StartCPUProfile(f)
+		if err := pprof.StartCPUProfile(f); err != nil {
+			fmt.Fprintf(os.Stderr, "Could not start CPU profile: %v\n", err)
+			f.Close()
+			os.Exit(1)
+		}
 	}
 	return p
 }

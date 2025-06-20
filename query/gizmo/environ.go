@@ -428,4 +428,5 @@ func toViaDepthData(objs []interface{}) (predicates []interface{}, maxDepth int,
 
 func throwErr(vm *goja.Runtime, err error) goja.Value {
 	panic(vm.ToValue(err))
+	return nil
 }

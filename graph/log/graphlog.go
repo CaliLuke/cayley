@@ -130,7 +130,6 @@ func SplitDeltas(in []graph.Delta) *Deltas {
 	sort.Slice(decNodes, func(i, j int) bool {
 		return bytes.Compare(decNodes[i].Hash[:], decNodes[j].Hash[:]) < 0
 	})
-	hnodes = nil
 	return &Deltas{
 		IncNode: incNodes, DecNode: decNodes,
 		QuadAdd: quadAdd, QuadDel: quadDel,

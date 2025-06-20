@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//go:build !appengine
 // +build !appengine
 
 package repl
@@ -101,7 +102,11 @@ func Repl(ctx context.Context, h *graph.Handle, queryLanguage string, timeout ti
 	if os.IsNotExist(err) {
 		fmt.Printf("creating new history file: %q\n", history)
 	}
-	defer persist(term, history)
+	defer func() {
+		if err := persist(term, history); err != nil {
+			clog.Errorf("failed to persist history: %v", err)
+		}
+	}()
 
 	var (
 		prompt = ps1
