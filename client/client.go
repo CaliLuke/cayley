@@ -70,7 +70,6 @@ func (c funcCloser) Close() error {
 	if c.closed {
 		return nil
 	}
-	c.closed = true
 	return c.f()
 }
 func (c *Client) QuadWriter() (quad.WriteCloser, error) {
