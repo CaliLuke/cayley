@@ -163,6 +163,7 @@ type iteratorNext struct {
 func newIteratorNext(qs *QuadStore, k string, d quad.Direction, t *Token) *iteratorNext {
 	if t == nil {
 		clog.Errorf("Token == nil")
+		return &iteratorNext{done: true}
 	}
 	if t.Kind != nodeKind {
 		clog.Errorf("Cannot create an iterator from a non-node value")
@@ -327,6 +328,7 @@ type iteratorContains struct {
 func newIteratorContains(qs *QuadStore, k string, d quad.Direction, t *Token) *iteratorContains {
 	if t == nil {
 		clog.Errorf("Token == nil")
+		return &iteratorContains{done: true}
 	}
 	if t.Kind != nodeKind {
 		clog.Errorf("Cannot create an iterator from a non-node value")
