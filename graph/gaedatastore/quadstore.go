@@ -202,7 +202,7 @@ func (qs *QuadStore) ApplyDeltas(in []graph.Delta, ignoreOpts graph.IgnoreOpts) 
 	for _, d := range in {
 		if d.Action != graph.Add && d.Action != graph.Delete {
 			//Defensive shortcut
-			return errors.New("Datastore: invalid action")
+			return errors.New("datastore: invalid action")
 		}
 		key := qs.createKeyForQuad(d.Quad)
 		keep := false
