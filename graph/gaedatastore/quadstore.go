@@ -150,16 +150,6 @@ func (qs *QuadStore) checkValid(k *datastore.Key) (bool, error) {
 	return true, nil
 }
 
-func getContext(opts graph.Options) (context.Context, error) {
-	req := opts["HTTPRequest"].(*http.Request)
-	if req == nil {
-		err := errors.New("HTTP Request needed")
-		clog.Errorf("%v", err)
-		return nil, err
-	}
-	return appengine.NewContext(req), nil
-}
-
 func (qs *QuadStore) ForRequest(r *http.Request) (graph.QuadStore, error) {
 	return &QuadStore{context: appengine.NewContext(r)}, nil
 }
