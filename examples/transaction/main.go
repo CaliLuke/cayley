@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 
@@ -32,7 +33,7 @@ func main() {
 
 	p := cayley.StartPath(store, quad.String("cats")).Out(quad.String("are"))
 
-	err = p.Iterate(nil).EachValue(nil, func(v quad.Value) error {
+	err = p.Iterate(context.TODO()).EachValue(nil, func(v quad.Value) error {
 		fmt.Println("cats are", v.Native())
 		return nil
 	})
