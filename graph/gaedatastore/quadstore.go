@@ -196,7 +196,7 @@ func (w *quadWriter) Close() error {
 
 func (qs *QuadStore) ApplyDeltas(in []graph.Delta, ignoreOpts graph.IgnoreOpts) error {
 	if qs.context == nil {
-		return errors.New("No context, graph not correctly initialised")
+		return errors.New("no context, graph not correctly initialised")
 	}
 	toKeep := make([]graph.Delta, 0)
 	for _, d := range in {
@@ -390,11 +390,11 @@ func (qs *QuadStore) updateMetadata(quadsAdded int64, nodesAdded int64) error {
 
 func (qs *QuadStore) updateLog(in []graph.Delta) ([]int64, error) {
 	if qs.context == nil {
-		err := errors.New("Error updating log, context is nil, graph not correctly initialised")
+		err := errors.New("error updating log, context is nil, graph not correctly initialised")
 		return nil, err
 	}
 	if len(in) == 0 {
-		return nil, errors.New("Nothing to log")
+		return nil, errors.New("nothing to log")
 	}
 	logEntries := make([]LogEntry, 0, len(in))
 	logKeys := make([]*datastore.Key, 0, len(in))
