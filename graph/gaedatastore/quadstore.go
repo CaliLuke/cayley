@@ -42,8 +42,7 @@ const (
 )
 
 var (
-	// Order of quad fields
-	spo = [4]quad.Direction{quad.Subject, quad.Predicate, quad.Object, quad.Label}
+// Order of quad fields
 )
 
 type QuadStore struct {
