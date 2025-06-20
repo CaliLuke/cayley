@@ -401,9 +401,9 @@ func (qs *QuadStore) updateLog(in []graph.Delta) ([]int64, error) {
 	for _, d := range in {
 		var action string
 		if d.Action == graph.Add {
-			action = "Add"
+			action = "add"
 		} else {
-			action = "Delete"
+			action = "delete"
 		}
 
 		entry := LogEntry{
