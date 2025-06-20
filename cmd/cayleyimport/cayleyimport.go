@@ -42,7 +42,7 @@ func NewCmd() *cobra.Command {
 			if len(args) == 0 {
 				in := cmd.InOrStdin()
 				if !hasIn(in) {
-					return errors.New("Either provide file to read from or pipe data")
+					return errors.New("either provide file to read from or pipe data")
 				}
 				reader = in
 			} else {
