@@ -86,7 +86,7 @@ func NewCmd() *cobra.Command {
 					fmt.Println(response.Result)
 				}
 			} else if r.StatusCode == http.StatusNotFound {
-				return errors.New("Database instance does not support write")
+				return errors.New("database instance does not support write")
 			}
 			return nil
 		},
