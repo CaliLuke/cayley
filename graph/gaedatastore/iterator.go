@@ -410,10 +410,7 @@ func (it *iteratorContains) Contains(ctx context.Context, v graph.Ref) bool {
 		offset = (quad.HashSize * 2) * 3
 	}
 	val := t.Hash[offset : offset+(quad.HashSize*2)]
-	if val == it.hash {
-		return true
-	}
-	return false
+	return val == it.hash
 }
 
 func (it *iteratorContains) TagResults(dst map[string]graph.Ref) {}
