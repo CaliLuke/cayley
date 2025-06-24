@@ -56,7 +56,7 @@ func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, v g
 		return refs.Size{Value: 0, Exact: true}, nil
 	}
 	qs.indexes.RLock()
-	all := qs.indexes.all
+	all := qs.indexes.All
 	qs.indexes.RUnlock()
 	for _, ind := range all {
 		if len(ind.Dirs) == 1 && ind.Dirs[0] == d {

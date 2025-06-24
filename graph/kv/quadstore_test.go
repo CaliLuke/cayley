@@ -226,13 +226,6 @@ func TestApplyDeltas(t *testing.T) {
 	require.NoError(t, err)
 }
 
-func clone(b []byte) []byte {
-	if b == nil {
-		return nil
-	}
-	return append([]byte{}, b...)
-}
-
 func sortByOp(exp, got Ops) {
 	// sort ops of one type
 	li := -1

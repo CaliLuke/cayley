@@ -97,9 +97,9 @@ type QuadStore struct {
 
 	indexes struct {
 		sync.RWMutex
-		all []QuadIndex
+		All []QuadIndex
 		// indexes used to detect duplicate quads
-		exists []QuadIndex
+		Exists []QuadIndex
 	}
 
 	valueLRU *lru.Cache
@@ -125,13 +125,13 @@ func Init(kv kv.KV, opt graph.Options) error {
 	ctx := context.TODO()
 	qs := newQuadStore(kv)
 	if data := os.Getenv(envKVDefaultIndexes); data != "" {
-		qs.indexes.all = nil
+		qs.indexes.All = nil
 		if err := json.Unmarshal([]byte(data), &qs.indexes); err != nil {
 			return err
 		}
 	}
-	if qs.indexes.all == nil {
-		qs.indexes.all = DefaultQuadIndexes
+	if qs.indexes.All == nil {
+		qs.indexes.All = DefaultQuadIndexes
 	}
 	if _, err := qs.getMetadata(ctx); err == nil {
 		return graph.ErrDatabaseExists
@@ -172,7 +172,7 @@ func New(kv kv.KV, opt graph.Options) (graph.QuadStore, error) {
 	if err != nil {
 		return nil, err
 	}
-	qs.indexes.all = list
+	qs.indexes.All = list
 	qs.valueLRU = lru.New(2000)
 	qs.exists.disabled, _ = opt.BoolKey(OptNoBloom, false)
 	if err := qs.initBloomFilter(ctx); err != nil {

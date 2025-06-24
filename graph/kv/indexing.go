@@ -120,7 +120,7 @@ func (qs *QuadStore) createBuckets(ctx context.Context, upfront bool) error {
 		for _, index := range buckets {
 			_ = kv.CreateBucket(ctx, tx, index)
 		}
-		for _, ind := range qs.indexes.all {
+		for _, ind := range qs.indexes.All {
 			_ = kv.CreateBucket(ctx, tx, ind.bucket())
 		}
 		return nil
@@ -155,7 +155,7 @@ func (qs *QuadStore) incSize(ctx context.Context, tx kv.Tx, size int64) error {
 // so we can read this information back later.
 func (qs *QuadStore) writeIndexesMeta(ctx context.Context) error {
 	// TODO(dennwc): change to protobuf later?
-	data, err := json.Marshal(qs.indexes.all)
+	data, err := json.Marshal(qs.indexes.All)
 	if err != nil {
 		return err
 	}
@@ -703,7 +703,7 @@ func (qs *QuadStore) indexLinks(ctx context.Context, tx kv.Tx, links []*cproto.P
 func (qs *QuadStore) indexLink(ctx context.Context, tx kv.Tx, p *cproto.Primitive) error {
 	var err error
 	qs.indexes.RLock()
-	all := qs.indexes.all
+	all := qs.indexes.All
 	qs.indexes.RUnlock()
 	for _, ind := range all {
 		err = qs.addToMapBucket(tx, ind.KeyFor(p), p.ID)
@@ -801,35 +801,35 @@ func appendIndex(bytelist []byte, l []uint64) []byte {
 
 func (qs *QuadStore) bestUnique() ([]QuadIndex, error) {
 	qs.indexes.RLock()
-	ind := qs.indexes.exists
+	ind := qs.indexes.Exists
 	qs.indexes.RUnlock()
 	if len(ind) != 0 {
 		return ind, nil
 	}
 	qs.indexes.Lock()
 	defer qs.indexes.Unlock()
-	if len(qs.indexes.exists) != 0 {
-		return qs.indexes.exists, nil
+	if len(qs.indexes.Exists) != 0 {
+		return qs.indexes.Exists, nil
 	}
-	for _, in := range qs.indexes.all {
+	for _, in := range qs.indexes.All {
 		if in.Unique {
 			if clog.V(2) {
 				clog.Infof("using unique index: %v", in.Dirs)
 			}
-			qs.indexes.exists = []QuadIndex{in}
-			return qs.indexes.exists, nil
+			qs.indexes.Exists = []QuadIndex{in}
+			return qs.indexes.Exists, nil
 		}
 	}
 	// TODO: find best combination of indexes
-	inds := qs.indexes.all
+	inds := qs.indexes.All
 	if len(inds) == 0 {
 		return nil, fmt.Errorf("no indexes defined")
 	}
 	if clog.V(2) {
 		clog.Infof("using index intersection: %v", inds)
 	}
-	qs.indexes.exists = inds
-	return qs.indexes.exists, nil
+	qs.indexes.Exists = inds
+	return qs.indexes.Exists, nil
 }
 
 func hasDir(dirs []quad.Direction, d quad.Direction) bool {
@@ -843,7 +843,7 @@ func hasDir(dirs []quad.Direction, d quad.Direction) bool {
 
 func (qs *QuadStore) bestIndexes(dirs []quad.Direction) []QuadIndex {
 	qs.indexes.RLock()
-	all := qs.indexes.all
+	all := qs.indexes.All
 	qs.indexes.RUnlock()
 	var (
 		max  int // more specific index is better
