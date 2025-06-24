@@ -32,7 +32,7 @@ type Oldstore struct {
 
 func (qs *Oldstore) valueAt(i int) quad.Value {
 	if !qs.Parse {
-		return quad.Raw(qs.Data[i])
+		return quad.IRI(qs.Data[i])
 	}
 	iv, err := strconv.Atoi(qs.Data[i])
 	if err == nil {
@@ -46,7 +46,7 @@ func (qs *Oldstore) ValueOf(s quad.Value) (graph.Ref, error) {
 		return nil, nil
 	}
 	for i := range qs.Data {
-		if va := qs.valueAt(i); va != nil && s.String() == va.String() {
+		if va := qs.valueAt(i); va != nil && quad.ToString(s) == quad.ToString(va) {
 			return iterator.Int64Node(i), nil
 		}
 	}
@@ -100,7 +100,7 @@ func (qs *Oldstore) NameOf(v graph.Ref) (quad.Value, error) {
 		if qs.Parse {
 			return quad.String(v), nil
 		}
-		return quad.Raw(string(v)), nil
+		return quad.IRI(string(v)), nil
 	default:
 		return nil, nil
 	}
@@ -132,7 +132,7 @@ var _ graph.QuadStore = &Store{}
 
 func (qs *Store) ValueOf(s quad.Value) (graph.Ref, error) {
 	for _, q := range qs.Data {
-		if q.Subject == s || q.Object == s {
+		if quad.ToString(q.Subject) == quad.ToString(s) || quad.ToString(q.Object) == quad.ToString(s) {
 			return refs.PreFetched(s), nil
 		}
 	}
@@ -184,7 +184,7 @@ func (qs *Store) QuadIterator(d quad.Direction, i graph.Ref) iterator.Shape {
 	fixed := iterator.NewFixed()
 	v := i.(refs.PreFetchedValue).NameOf()
 	for _, q := range qs.Data {
-		if q.Get(d) == v {
+		if quad.ToString(q.Get(d)) == quad.ToString(v) {
 			fixed.Add(quadValue{q})
 		}
 	}
@@ -195,7 +195,7 @@ func (qs *Store) QuadIteratorSize(ctx context.Context, d quad.Direction, val gra
 	v := val.(refs.PreFetchedValue).NameOf()
 	sz := refs.Size{Exact: true}
 	for _, q := range qs.Data {
-		if q.Get(d) == v {
+		if quad.ToString(q.Get(d)) == quad.ToString(v) {
 			sz.Value++
 		}
 	}
@@ -203,21 +203,18 @@ func (qs *Store) QuadIteratorSize(ctx context.Context, d quad.Direction, val gra
 }
 
 func (qs *Store) NodesAllIterator() iterator.Shape {
-	set := make(map[string]bool)
+	set := make(map[quad.Value]bool)
 	for _, q := range qs.Data {
 		for _, d := range quad.Directions {
-			n, err := qs.NameOf(refs.PreFetched(q.Get(d)))
-			if err != nil {
-				return iterator.NewError(err)
-			}
+			n := q.Get(d)
 			if n != nil {
-				set[n.String()] = true
+				set[n] = true
 			}
 		}
 	}
 	fixed := iterator.NewFixed()
-	for k := range set {
-		fixed.Add(refs.PreFetched(quad.Raw(k)))
+	for v := range set {
+		fixed.Add(refs.PreFetched(v))
 	}
 	return fixed
 }
@@ -239,7 +236,7 @@ func (qs *Store) Stats(ctx context.Context, exact bool) (graph.Stats, error) {
 				return graph.Stats{}, err
 			}
 			if n != nil {
-				set[n.String()] = struct{}{}
+				set[quad.ToString(n)] = struct{}{}
 			}
 		}
 	}

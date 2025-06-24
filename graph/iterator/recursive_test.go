@@ -31,7 +31,7 @@ import (
 func singleHop(qs graph.QuadIndexer, pred string) Morphism {
 	return func(it Shape) Shape {
 		fixed := NewFixed()
-		fixed.Add(refs.PreFetched(quad.Raw(pred)))
+		fixed.Add(refs.PreFetched(quad.IRI(pred)))
 		predlto := graph.NewLinksTo(qs, fixed, quad.Predicate)
 		lto := graph.NewLinksTo(qs, it, quad.Subject)
 		and := NewAnd()
@@ -43,13 +43,13 @@ func singleHop(qs graph.QuadIndexer, pred string) Morphism {
 
 var recTestQs = &graphmock.Store{
 	Data: []quad.Quad{
-		quad.MakeRaw("alice", "parent", "bob", ""),
-		quad.MakeRaw("bob", "parent", "charlie", ""),
-		quad.MakeRaw("charlie", "parent", "dani", ""),
-		quad.MakeRaw("charlie", "parent", "bob", ""),
-		quad.MakeRaw("dani", "parent", "emily", ""),
-		quad.MakeRaw("fred", "follows", "alice", ""),
-		quad.MakeRaw("greg", "follows", "alice", ""),
+		quad.MakeIRI("alice", "parent", "bob", ""),
+		quad.MakeIRI("bob", "parent", "charlie", ""),
+		quad.MakeIRI("charlie", "parent", "dani", ""),
+		quad.MakeIRI("charlie", "parent", "bob", ""),
+		quad.MakeIRI("dani", "parent", "emily", ""),
+		quad.MakeIRI("fred", "follows", "alice", ""),
+		quad.MakeIRI("greg", "follows", "alice", ""),
 	},
 }
 
@@ -57,18 +57,27 @@ func TestRecursiveNext(t *testing.T) {
 	ctx := context.TODO()
 	qs := recTestQs
 	start := NewFixed()
-	start.Add(refs.PreFetched(quad.Raw("alice")))
+	start.Add(refs.PreFetched(quad.IRI("alice")))
 	r := NewRecursive(start, singleHop(qs, "parent"), 0).Iterate()
 
-	expected := []string{"bob", "charlie", "dani", "emily"}
-	var got []string
+	expected := []quad.Value{
+		quad.IRI("bob"),
+		quad.IRI("charlie"),
+		quad.IRI("dani"),
+		quad.IRI("emily"),
+	}
+	var got []quad.Value
 	for r.Next(ctx) {
 		qn, err := qs.NameOf(r.Result())
 		require.NoError(t, err)
-		got = append(got, quad.ToString(qn))
+		got = append(got, qn)
 	}
-	sort.Strings(expected)
-	sort.Strings(got)
+	sort.Slice(expected, func(i, j int) bool {
+		return quad.ToString(expected[i]) < quad.ToString(expected[j])
+	})
+	sort.Slice(got, func(i, j int) bool {
+		return quad.ToString(got[i]) < quad.ToString(got[j])
+	})
 	require.Equal(t, expected, got)
 }
 
@@ -76,16 +85,22 @@ func TestRecursiveContains(t *testing.T) {
 	ctx := context.TODO()
 	qs := recTestQs
 	start := NewFixed()
-	start.Add(refs.PreFetched(quad.Raw("alice")))
+	start.Add(refs.PreFetched(quad.IRI("alice")))
 	r := NewRecursive(start, singleHop(qs, "parent"), 0).Lookup()
-	values := []string{"charlie", "bob", "not"}
-	expected := []bool{true, true, false}
+	expected := []struct {
+		val quad.Value
+		res bool
+	}{
+		{quad.IRI("charlie"), true},
+		{quad.IRI("bob"), true},
+		{quad.IRI("not"), false},
+	}
 
-	for i, v := range values {
-		vn, err := qs.ValueOf(quad.Raw(v))
+	for _, v := range expected {
+		vn, err := qs.ValueOf(v.val)
 		require.NoError(t, err)
 		ok := r.Contains(ctx, vn)
-		require.Equal(t, expected[i], ok)
+		require.Equal(t, v.res, ok)
 	}
 }
 
@@ -98,27 +113,34 @@ func TestRecursiveNextPath(t *testing.T) {
 	and := NewAnd()
 	and.AddSubIterator(it)
 	fixed := NewFixed()
-	fixed.Add(refs.PreFetched(quad.Raw("alice")))
+	fixed.Add(refs.PreFetched(quad.IRI("alice")))
 	and.AddSubIterator(fixed)
 	r := NewRecursive(and, singleHop(qs, "parent"), 0).Iterate()
 
-	expected := []string{"fred", "fred", "fred", "fred", "greg", "greg", "greg", "greg"}
-	var got []string
+	expected := []quad.Value{
+		quad.IRI("fred"), quad.IRI("fred"), quad.IRI("fred"), quad.IRI("fred"),
+		quad.IRI("greg"), quad.IRI("greg"), quad.IRI("greg"), quad.IRI("greg"),
+	}
+	var got []quad.Value
 	for r.Next(ctx) {
 		res := make(map[string]refs.Ref)
 		r.TagResults(res)
-		vn, err := qs.NameOf(res["person"])
+		v, err := qs.NameOf(res["person"])
 		require.NoError(t, err)
-		got = append(got, quad.ToString(vn))
+		got = append(got, v)
 		for r.NextPath(ctx) {
 			res := make(map[string]refs.Ref)
 			r.TagResults(res)
-			vn, err := qs.NameOf(res["person"])
+			v, err := qs.NameOf(res["person"])
 			require.NoError(t, err)
-			got = append(got, quad.ToString(vn))
+			got = append(got, v)
 		}
 	}
-	sort.Strings(expected)
-	sort.Strings(got)
+	sort.Slice(expected, func(i, j int) bool {
+		return quad.ToString(expected[i]) < quad.ToString(expected[j])
+	})
+	sort.Slice(got, func(i, j int) bool {
+		return quad.ToString(got[i]) < quad.ToString(got[j])
+	})
 	require.Equal(t, expected, got)
 }
