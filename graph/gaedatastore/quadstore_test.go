@@ -45,10 +45,10 @@ import (
 //	          +---+
 var simpleGraph = graphtest.MakeQuadSet()
 var simpleGraphUpdate = []quad.Quad{
-	quad.MakeRaw("A", "follows", "B", ""),
-	quad.MakeRaw("F", "follows", "B", ""),
-	quad.MakeRaw("C", "follows", "D", ""),
-	quad.MakeRaw("X", "follows", "B", ""),
+	quad.MakeIRI("A", "follows", "B", ""),
+	quad.MakeIRI("F", "follows", "B", ""),
+	quad.MakeIRI("C", "follows", "D", ""),
+	quad.MakeIRI("X", "follows", "B", ""),
 }
 
 type pair struct {
@@ -111,11 +111,11 @@ func TestIterators(t *testing.T) {
 		quad.Make("C", "follows", "D", ""),
 	}
 
-	it := qs.QuadIterator(quad.Subject, qs.ValueOf(quad.Raw("C")))
+	it := qs.QuadIterator(quad.Subject, qs.ValueOf(quad.IRI("C")))
 	graphtest.ExpectIteratedQuads(t, qs, it, expected, false)
 
 	// Test contains
-	it = qs.QuadIterator(quad.Label, qs.ValueOf(quad.Raw("status_graph")))
+	it = qs.QuadIterator(quad.Label, qs.ValueOf(quad.IRI("status_graph")))
 	gqs := qs.(*QuadStore)
 	key := gqs.createKeyForQuad(quad.Make("G", "status", "cool", "status_graph"))
 	token := &Token{quadKind, key.StringID()}

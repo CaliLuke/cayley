@@ -464,7 +464,7 @@ func (qs *QuadStore) NameOf(val graph.Ref) (quad.Value, error) {
 	if err != nil {
 		return nil, err
 	}
-	return quad.Raw(node.Name), nil
+	return quad.IRI(node.Name), nil
 }
 
 func (qs *QuadStore) Quad(val graph.Ref) (quad.Quad, error) {
