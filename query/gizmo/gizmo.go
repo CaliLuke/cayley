@@ -96,8 +96,6 @@ type Session struct {
 	ctx   context.Context
 	limit int
 	count int
-
-	err error
 }
 
 func (s *Session) context() context.Context {
@@ -261,17 +259,14 @@ func (r *Result) Result() interface{} {
 }
 
 func (s *Session) compile(qu string) error {
-	var p *goja.Program
 	if s.last == qu && s.last != "" {
-		p = s.p
-	} else {
-		var err error
-		p, err = goja.Compile("", qu, false)
-		if err != nil {
-			return err
-		}
-		s.last, s.p = qu, p
+		return nil
 	}
+	p, err := goja.Compile("", qu, false)
+	if err != nil {
+		return err
+	}
+	s.last, s.p = qu, p
 	return nil
 }
 
@@ -295,7 +290,7 @@ func (s *Session) Execute(ctx context.Context, qu string, opt query.Options) (qu
 	}
 	s.limit = opt.Limit
 	s.count = 0
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(ctx)
 	s.ctx = ctx
 	s.col = opt.Collation
 	return &results{
