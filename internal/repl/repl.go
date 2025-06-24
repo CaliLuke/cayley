@@ -25,6 +25,7 @@ import (
 	"os/signal"
 	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/peterh/liner"
@@ -253,7 +254,7 @@ func terminal(path string) (*liner.State, error) {
 
 	go func() {
 		c := make(chan os.Signal, 1)
-		signal.Notify(c, os.Interrupt, os.Kill)
+		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 		<-c
 
 		err := persist(term, history)

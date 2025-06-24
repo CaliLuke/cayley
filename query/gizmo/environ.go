@@ -114,7 +114,7 @@ func (g *graphObject) Emit(call goja.FunctionCall) goja.Value {
 	if !goja.IsNull(value) && !goja.IsUndefined(value) {
 		val := exportArgs([]goja.Value{value})[0]
 		if val != nil {
-			g.s.send(nil, &Result{Val: val})
+			g.s.send(g.s.ctx, &Result{Val: val})
 		}
 	}
 	return goja.Null()

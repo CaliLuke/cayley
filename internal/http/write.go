@@ -117,6 +117,10 @@ func (api *API) ServeV1WriteNQuad(w http.ResponseWriter, r *http.Request, params
 	}
 
 	quadReader, err := decompressor.New(formFile)
+	if err != nil {
+		jsonResponse(w, 400, err)
+		return
+	}
 	// TODO(kortschak) Make this configurable from the web UI.
 	dec := nquads.NewReader(quadReader, false)
 
