@@ -1278,10 +1278,10 @@ func TestDeleteReinsertedDup(t testing.TB, gen testutil.DatabaseFunc, _ *Config)
 		}
 
 		// the node should be garbage-collected
-		refs, err = graph.RefsOf(ctx, qs, []quad.Value{
+		// the node should be garbage-collected
+		if _, err = graph.RefsOf(ctx, qs, []quad.Value{
 			q.Object,
-		})
-		if err == nil {
+		}); err == nil {
 			// FIXME(dennwc): the graphlog.SplitDeltas adds an increment even though the quad is duplicated and ignored
 			t.Skip("value must be garbage-collected")
 		}
