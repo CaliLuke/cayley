@@ -124,7 +124,6 @@ func runTxSqlite(tx *sql.Tx, nodes []graphlog.NodeUpdate, quads []graphlog.QuadU
 				if err != nil {
 					return err
 				}
-				insertValue = make(map[csql.ValueType]*sql.Stmt)
 			}
 			_, err := insertQuad.Exec(dirs...)
 			err = convInsertError(err)

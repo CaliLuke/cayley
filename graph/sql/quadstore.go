@@ -171,20 +171,6 @@ func connect(addr string, flavor string, opts graph.Options) (*sql.DB, error) {
 	return conn, nil
 }
 
-var nodesColumns = []string{
-	"hash",
-	"value",
-	"value_string",
-	"datatype",
-	"language",
-	"iri",
-	"bnode",
-	"value_int",
-	"value_bool",
-	"value_float",
-	"value_time",
-}
-
 var nodeInsertColumns = [][]string{
 	{"value"},
 	{"value_string", "iri"},
@@ -776,30 +762,4 @@ func (qs *QuadStore) Close() error {
 
 func (qs *QuadStore) QuadDirection(in graph.Ref, d quad.Direction) (graph.Ref, error) {
 	return NodeHash{in.(QuadHashes).Get(d)}, nil
-}
-
-func (qs *QuadStore) sizeForIterator(dir quad.Direction, hash NodeHash) int64 {
-	var err error
-	if qs.noSizes {
-		st, _ := qs.Stats(context.TODO(), false)
-		if dir == quad.Predicate {
-			return (st.Quads.Value / 100) + 1
-		}
-		return (st.Quads.Value / 1000) + 1
-	}
-	if val, ok := qs.sizes.Get(hash.String() + string(dir.Prefix())); ok {
-		return val.(int64)
-	}
-	var size int64
-	if clog.V(4) {
-		clog.Infof("sql: getting size for select %s, %v", dir.String(), hash)
-	}
-	err = qs.db.QueryRow(
-		fmt.Sprintf("SELECT count(*) FROM quads WHERE %s_hash = "+qs.flavor.Placeholder(1)+";", dir.String()), hash.SQLValue()).Scan(&size)
-	if err != nil {
-		clog.Errorf("Error getting size from SQL database: %v", err)
-		return 0
-	}
-	qs.sizes.Put(hash.String()+string(dir.Prefix()), size)
-	return size
 }
