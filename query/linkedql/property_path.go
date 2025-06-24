@@ -137,5 +137,5 @@ type PropertyStep struct {
 
 // BuildPath implements PropertyPath
 func (p PropertyStep) BuildPath(qs graph.QuadStore, ns *voc.Namespaces) (*path.Path, error) {
-	return p.BuildPath(qs, ns)
+	return p.PathStep.BuildPath(qs, ns)
 }
