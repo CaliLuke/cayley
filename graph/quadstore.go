@@ -146,7 +146,7 @@ func (d Options) BoolKey(key string, def bool) (bool, error) {
 			return v, nil
 		}
 
-		return def, fmt.Errorf("Invalid %s parameter type from config: %T", key, val)
+		return def, fmt.Errorf("invalid %s parameter type from config: %T", key, val)
 	}
 
 	return def, nil
