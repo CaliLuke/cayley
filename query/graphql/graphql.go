@@ -532,7 +532,7 @@ func convField(fld *ast.Field, labels []quad.Value) (out field, err error) {
 		switch d.Name.Value {
 		case "rev", "reverse":
 			if len(d.Arguments) == 0 {
-				out.Rev = out.Rev != true
+				out.Rev = !out.Rev
 			} else {
 				out.Has, err = argsToHas(out.Has, d.Arguments, true, out.Labels)
 				if err != nil {
