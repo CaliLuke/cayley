@@ -240,7 +240,6 @@ type orContains struct {
 	sub          []Index
 	curInd       int
 	result       refs.Ref
-	err          error
 }
 
 func newOrContains(sub []Index, shortCircuit bool) *orContains {
@@ -262,7 +261,7 @@ func (it *orContains) String() string {
 }
 
 func (it *orContains) Err() error {
-	return it.err
+	return nil
 }
 
 func (it *orContains) Result() refs.Ref {
@@ -290,10 +289,7 @@ func (it *orContains) subItsContain(ctx context.Context, val refs.Ref) (bool, er
 // Check a value against the entire iterator, in order.
 func (it *orContains) Contains(ctx context.Context, val refs.Ref) bool {
 	anyGood, err := it.subItsContain(ctx, val)
-	if err != nil {
-		it.err = err
-		return false
-	} else if !anyGood {
+	if err != nil || !anyGood {
 		return false
 	}
 	it.result = val
@@ -306,12 +302,7 @@ func (it *orContains) Contains(ctx context.Context, val refs.Ref) bool {
 // shortcircuiting, only allow new results from the currently checked iterator
 func (it *orContains) NextPath(ctx context.Context) bool {
 	if it.curInd != -1 {
-		currIt := it.sub[it.curInd]
-		ok := currIt.NextPath(ctx)
-		if !ok {
-			it.err = currIt.Err()
-		}
-		return ok
+		return it.sub[it.curInd].NextPath(ctx)
 	}
 	// TODO(dennwc): this should probably list matches from other sub-iterators
 	return false
