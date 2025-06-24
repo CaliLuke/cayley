@@ -1210,7 +1210,7 @@ func TestSchema(t testing.TB, gen testutil.DatabaseFunc, conf *Config) {
 	require.Equal(t, p.ID, id)
 
 	var p2 Person
-	err = sch.LoadTo(nil, qs, &p2, id)
+	err = sch.LoadTo(context.TODO(), qs, &p2, id)
 	require.NoError(t, err)
 	require.Equal(t, p, p2)
 }
