@@ -1,0 +1,330 @@
+# Code Quality Improvement Checklist
+
+-   **File:** `cmd/cayleyimport/cayleyimport_test.go`
+    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
+        -   `L22`: `{quad.IRI("http://example.com/alice"), quad.IRI("http://xmlns.com/foaf/0.1/knows"), quad.IRI("http://example.com/bob"), nil},`
+        -   `L23`: `{quad.IRI("http://example.com/alice"), quad.IRI("http://xmlns.com/foaf/0.1/name"), quad.String("Alice"), nil},`
+        -   `L24`: `{quad.IRI("http://example.com/bob"), quad.IRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), quad.IRI("http://xmlns.com/foaf/0.1/Person"), nil},`
+        -   `L25`: `{quad.IRI("http://example.com/bob"), quad.IRI("http://xmlns.com/foaf/0.1/knows"), quad.IRI("http://example.com/alice"), nil},`
+        -   `L26`: `{quad.IRI("http://example.com/bob"), quad.IRI("http://xmlns.com/foaf/0.1/name"), quad.String("Bob"), nil},`
+-   **File:** `graph/graphtest/graphtest.go`
+    -   `[ ]` **[SA1019]** `qw.WriteQuad is deprecated: use WriteQuads instead.`
+        -   `L435`: `qw.WriteQuad(q)`
+    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+        -   `L580`: `qsv, err := qs.ValueOf(quad.Raw(pq))`
+        -   `L632`: `exp = append(exp, quad.Raw("follows"))`
+        -   `L635`: `exp = append(exp, quad.Raw("status"))`
+        -   `L742`: `vn, err := qs.ValueOf(quad.Raw("E"))`
+        -   `L754`: `qsv, err := qs.ValueOf(quad.Raw("E"))`
+        -   `L783`: `qsv, err := qs.ValueOf(quad.Raw("E"))`
+        -   `L804`: `quad.IRI("B"), quad.Raw("<type>"),`
+        -   `L981`: `qsv, err := qs.ValueOf(quad.Raw("C"))`
+        -   `L985`: `qsv, err := qs.ValueOf(quad.Raw("follows"))`
+        -   `L1005`: `require.Equal(t, quad.Raw("C"), qsn)`
+        -   `L1156`: `del := quad.Raw("D")`
+        -   `L1174`: `quad.Raw("A"),`
+        -   `L1175`: `quad.Raw("B"),`
+        -   `L1176`: `quad.Raw("C"),`
+        -   `L1177`: `quad.Raw("E"),`
+        -   `L1178`: `quad.Raw("F"),`
+        -   `L1179`: `quad.Raw("G"),`
+        -   `L1180`: `quad.Raw("cool"),`
+        -   `L1181`: `quad.Raw("follows"),`
+        -   `L1182`: `quad.Raw("status"),`
+        -   `L1183`: `quad.Raw("status_graph"),`
+    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
+        -   `L814`: `{values[0], values[1], values[2], values[3]},`
+        -   `L815`: `{values[4], values[5], values[6], nil},`
+        -   `L816`: `{values[4], values[5], values[7], nil},`
+        -   `L817`: `{values[0], values[1], values[8], nil},`
+        -   `L818`: `{values[0], values[1], values[9], nil},`
+        -   `L819`: `{values[0], values[1], values[10], nil},`
+        -   `L820`: `{values[0], values[1], values[11], nil},`
+        -   `L1108`: `{quad.BNode("alice"), quad.BNode("bob"), quad.BNode("charlie"), quad.BNode("dani")},`
+        -   `L1109`: `{quad.IRI("alice"), quad.IRI("bob"), quad.IRI("charlie"), quad.IRI("dani")},`
+        -   `L1110`: `{quad.String("alice"), quad.String("bob"), quad.String("charlie"), quad.String("dani")},`
+        -   `L1111`: `{quad.Int(100), quad.Int(112), quad.Int(110), quad.Int(20)},`
+        -   `L1112`: `{quad.Time(t1), quad.Time(t2), quad.Time(t3), quad.Time(t4)},`
+        -   `L1114`: `{quad.Int(math.MaxInt64), quad.Int(math.MaxInt64 - 1), quad.Int(math.MinInt64 + 1), quad.Int(math.MinInt64)},`
+-   **File:** `graph/kv/bbolt/bolt_test.go`
+    -   `[ ]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
+        -   `L18`: `import (`
+-   **File:** `graph/kv/kvtest/kvtest.go`
+    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+        -   `L97`: `{Dir: quad.Object, Values: shape.Lookup{quad.Raw("F")}},`
+        -   `L101`: `{Dir: quad.Object, Values: shape.Lookup{quad.Raw("F")}},`
+-   **File:** `graph/kv/leveldb/leveldb_test.go`
+    -   `[ ]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
+        -   `L18`: `import (`
+-   **File:** `graph/linksto_test.go`
+    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+        -   `L31`: `object := quad.Raw("cool")`
+-   **File:** `graph/memstore/keys.go`
+    -   `[ ]` **[vet]** `method Seek(k int64) (e *memstore.Enumerator, ok bool) should have signature Seek(int64, int) (int64, error)`
+        -   `L528`: `func (t *Tree) Seek(k int64) (e *Enumerator, ok bool) {`
+-   **File:** `graph/memstore/quadstore_test.go`
+    -   `[ ]` **[SA1019]** `quad.MakeRaw is deprecated: use Make pr MakeIRI instead.`
+        -   `L48`: `quad.MakeRaw("A", "follows", "B", ""),`
+        -   `L49`: `quad.MakeRaw("C", "follows", "B", ""),`
+        -   `L50`: `quad.MakeRaw("C", "follows", "D", ""),`
+        -   `L51`: `quad.MakeRaw("D", "follows", "B", ""),`
+        -   `L52`: `quad.MakeRaw("B", "follows", "F", ""),`
+        -   `L53`: `quad.MakeRaw("F", "follows", "G", ""),`
+        -   `L54`: `quad.MakeRaw("D", "follows", "G", ""),`
+        -   `L55`: `quad.MakeRaw("E", "follows", "F", ""),`
+        -   `L56`: `quad.MakeRaw("B", "status", "cool", "status_graph"),`
+        -   `L57`: `quad.MakeRaw("D", "status", "cool", "status_graph"),`
+        -   `L58`: `quad.MakeRaw("G", "status", "cool", "status_graph"),`
+    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+        -   `L117`: `v, err := qs.ValueOf(quad.Raw(test.query))`
+        -   `L133`: `qsv, err := qs.ValueOf(quad.Raw("C"))`
+        -   `L138`: `qsv, err = qs.ValueOf(quad.Raw("follows"))`
+        -   `L159`: `if vn != quad.Raw("C") {`
+        -   `L192`: `{Dir: quad.Object, Values: shape.Lookup{quad.Raw("cool")}},`
+        -   `L220`: `qsv, err := qs.ValueOf(quad.Raw("E"))`
+        -   `L225`: `qsv, err = qs.ValueOf(quad.Raw("follows"))`
+-   **File:** `graph/proto/serializations_helpers.go`
+    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+        -   `L19`: `return quad.Raw(m.Name)`
+-   **File:** `graph/sql/sqltest/sqltest.go`
+    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+        -   `L90`: `qsv, err := qs.ValueOf(quad.Raw(obj.String()))`
+-   **File:** `internal/http/query.go`
+    -   `[ ]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
+        -   `L22`: `import (`
+-   **File:** `internal/http/write.go`
+    -   `[ ]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
+        -   `L22`: `import (`
+-   **File:** `internal/linkedql/schema/schema.go`
+    -   `[ ]` **[SA1019]** `reflect.PtrTo has been deprecated since Go 1.22 and an alternative has been available since Go 1.18: Superseded by [PointerTo].`
+        -   `L286`: `stepTypeClasses := getStepTypeClasses(reflect.PtrTo(t))`
+-   **File:** `query/gizmo/environ.go`
+    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+        -   `L247`: `return oneStringType(func(s string) quad.Value { return quad.Raw(s) })`
+    -   `[ ]` **[vet]** `unreachable code`
+        -   `L431`: `return nil`
+-   **File:** `query/gizmo/gizmo_test.go`
+    -   `[ ]` **[SA1019]** `quad.MakeRaw is deprecated: use Make pr MakeIRI instead.`
+        -   `L780`: `quad.MakeRaw("alice", "follows", "bob", ""),`
+        -   `L781`: `quad.MakeRaw("bob", "follows", "alice", ""),`
+        -   `L782`: `quad.MakeRaw("charlie", "follows", "bob", ""),`
+        -   `L783`: `quad.MakeRaw("dani", "follows", "charlie", ""),`
+        -   `L784`: `quad.MakeRaw("dani", "follows", "alice", ""),`
+        -   `L785`: `quad.MakeRaw("alice", "is", "cool", ""),`
+        -   `L786`: `quad.MakeRaw("bob", "is", "not cool", ""),`
+        -   `L787`: `quad.MakeRaw("charlie", "is", "cool", ""),`
+        -   `L788`: `quad.MakeRaw("danie", "is", "not cool", ""),`
+-   **File:** `query/graphql/graphql.go`
+    -   `[ ]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
+        -   `L8`: `import (`
+    -   `[ ]` **[gocyclo]** `61: graphql iterateObject`
+        -   `L156`: `func iterateObject(ctx context.Context, qs graph.QuadStore, f *field, p *path.Path) (out []map[string]interface{}, _ error) {`
+    -   `[ ]` **[gocyclo]** `21: graphql convField`
+        -   `L497`: `func convField(fld *ast.Field, labels []quad.Value) (out field, err error) {`
+    -   `[ ]` **[gocyclo]** `16: graphql convValue`
+        -   `L563`: `func convValue(v ast.Value) (out []quad.Value, _ error) {`
+-   **File:** `query/linkedql/registry.go`
+    -   `[ ]` **[ST1005]** `error strings should not be capitalized`
+        -   `L149`: `return nil, fmt.Errorf("Expected a string but received %v instead", a)`
+        -   `L171`: `return nil, fmt.Errorf("Expected a string but received %v instead", item)`
+    -   `[ ]` **[gocyclo]** `40: linkedql Unmarshal`
+        -   `L64`: `func Unmarshal(data []byte) (RegistryItem, error) {`
+-   **File:** `query/linkedql/steps/collect.go`
+    -   `[ ]` **[U1000]** `var rdfNil is unused`
+        -   `L31`: `rdfNil = quad.IRI("rdf:nil").Full()`
+-   **File:** `query/linkedql/steps/jsonld_util.go`
+    -   `[ ]` **[ST1005]** `error strings should not be capitalized`
+        -   `L40`: `return fmt.Errorf("Expected %v to be a string but instead received %T", target, target)`
+        -   `L43`: `return fmt.Errorf("Expected \"%v\" but instead received \"%v\"", s, t)`
+        -   `L49`: `return fmt.Errorf("Expected multiple values but instead received the single value: %#v", target)`
+        -   `L52`: `return fmt.Errorf("Expected %#v and %#v to have the same length", s, t)`
+        -   `L61`: `return fmt.Errorf("No matching values for the item %#v in %#v", i, t)`
+        -   `L67`: `return fmt.Errorf("Expected %#v to be a map or a slice with a single map but instead received %T", target, target)`
+    -   `[ ]` **[S1005]** `unnecessary assignment to the blank identifier`
+        -   `L70`: `tV, _ := t[k]`
+-   **File:** `query/linkedql/steps/jsonld_util_test.go`
+    -   `[ ]` **[ST1005]** `error strings should not be capitalized`
+        -   `L26`: `expected: fmt.Errorf("Expected \"a\" but instead received \"b\""),`
+        -   `L38`: `expected: fmt.Errorf("Expected \"Alice\" but instead received \"Bob\""),`
+        -   `L56`: `expected: fmt.Errorf("No matching values for the item \"Bob\" in []interface {}{\"Dan\", \"Alice\"}"),`
+        -   `L62`: `expected: fmt.Errorf("Expected multiple values but instead received the single value: \"Alice\""),`
+        -   `L90`: `expected: fmt.Errorf("Expected \"alice\" but instead received \"bob\""),`
+        -   `L102`: `expected: fmt.Errorf("Expected \"Alice\" but instead received \"Bob\""),`
+-   **File:** `query/linkedql/steps/match.go`
+    -   `[ ]` **[ST1005]** `error strings should not be capitalized`
+        -   `L142`: `return nil, fmt.Errorf("Unexpected type for @id %T", idString)`
+        -   `L160`: `return nil, fmt.Errorf("Pattern does not parse to any quad. `{}` is the only pattern allowed to not parse to any quad")`
+-   **File:** `query/linkedql/steps/match_test.go`
+    -   `[ ]` **[U1000]** `var city is unused`
+        -   `L19`: `city    = quad.IRI(ns + "city")`
+-   **File:** `query/linkedql/steps/properties.go`
+    -   `[ ]` **[ST1005]** `error strings should not be capitalized`
+        -   `L32`: `return nil, fmt.Errorf("Not implemented: should tag all properties")`
+        -   `L36`: `return nil, fmt.Errorf("Not implemented: should use step to resolve to properties")`
+        -   `L46`: `return nil, fmt.Errorf("Unexpected type")`
+-   **File:** `query/linkedql/steps/steps_test.go`
+    -   `[ ]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
+        -   `L8`: `import (`
+-   **File:** `query/mql/build_iterator.go`
+    -   `[ ]` **[ST1005]** `error strings should not be capitalized`
+        -   `L93`: `err = fmt.Errorf("Unknown JSON type: %T", query)`
+-   **File:** `query/mql/session.go`
+    -   `[ ]` **[S1023]** `redundant return statement`
+        -   `L123`: `return`
+-   **File:** `query/path/morphism_apply_functions.go`
+    -   `[ ]` **[ST1005]** `error strings should not be capitalized`
+        -   `L418`: `panic(fmt.Errorf("Invalid type passed to buildViaPath: %v (%T)", v, v))`
+-   **File:** `query/path/pathtest/pathtest.go`
+    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+        -   `L160`: `path:    path.StartPath(qs, quad.Raw(vAlice.String())).Out(quad.Raw(vFollows.String())),`
+        -   `L200`: `path:    path.StartPath(qs, quad.Raw(vBob.String())).Out(path.StartPath(qs, quad.Raw(vPredicate.String())).Out(quad.Raw(vAre.String()))),`
+-   **File:** `schema/loader_test.go`
+    -   `[ ]` **[SA1012]** `do not pass a nil Context, even if a function permits it; pass context.TODO if you are unsure about which Context to use`
+        -   `L26`: `if err := sch.LoadIteratorTo(nil, qs, reflect.ValueOf(b), nil); err != nil {`
+        -   `L54`: `if err := sch.LoadIteratorTo(nil, qs, reflect.ValueOf(a1), nil); err != nil {`
+        -   `L100`: `if err := sch.LoadIteratorToDepth(nil, qs, out, depth, it); err != nil {`
+    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
+        -   `L21`: `{a.ID, iri("name"), quad.String(a.Name), nil},`
+        -   `L22`: `{a.ID, iri("next"), a.ID, nil},`
+        -   `L45`: `{a.ID, iri("name"), quad.String(a.Name), nil},`
+        -   `L46`: `{b.ID, iri("name"), quad.String(b.Name), nil},`
+        -   `L47`: `{c.ID, iri("name"), quad.String(c.Name), nil},`
+        -   `L48`: `{a.ID, iri("next"), b.ID, nil},`
+        -   `L49`: `{b.ID, iri("next"), c.ID, nil},`
+        -   `L50`: `{c.ID, iri("next"), a.ID, nil},`
+        -   `L158`: `{iri("1234"), typeIRI, iri("some:Type"), nil},`
+        -   `L159`: `{iri("1234"), iri("name"), quad.String("some item"), nil},`
+        -   `L160`: `{iri("1234"), iri("values"), quad.String("val1"), nil},`
+        -   `L161`: `{iri("1234"), iri("values"), quad.String("val2"), nil},`
+        -   `L162`: `{iri("sub1"), typeIRI, iri("some:item"), nil},`
+        -   `L163`: `{iri("sub1"), iri("name"), quad.String("Sub 1"), nil},`
+        -   `L164`: `{iri("1234"), iri("items"), iri("sub1"), nil},`
+        -   `L165`: `{iri("sub2"), typeIRI, iri("some:item"), nil},`
+        -   `L166`: `{iri("sub2"), iri("name"), quad.String("Sub 2"), nil},`
+        -   `L167`: `{iri("1234"), iri("items"), iri("sub2"), nil},`
+        -   `L168`: `{iri("sub3"), typeIRI, iri("some:item"), nil},`
+        -   `L169`: `{iri("sub3"), iri("name"), quad.String("Sub 3"), nil},`
+        -   `L170`: `{iri("1234"), iri("sub"), iri("sub3"), nil},`
+        -   `L171`: `{iri("1234"), iri("val"), quad.Int(123), nil},`
+        -   `L192`: `{quad.BNode("1234"), typeIRI, iri("some:Type"), nil},`
+        -   `L193`: `{quad.BNode("1234"), iri("name"), quad.String("some item"), nil},`
+        -   `L194`: `{quad.BNode("1234"), iri("values"), quad.String("val1"), nil},`
+        -   `L195`: `{quad.BNode("1234"), iri("values"), quad.String("val2"), nil},`
+        -   `L196`: `{iri("sub1"), typeIRI, iri("some:item"), nil},`
+        -   `L197`: `{iri("sub1"), iri("name"), quad.String("Sub 1"), nil},`
+        -   `L198`: `{quad.BNode("1234"), iri("items"), iri("sub1"), nil},`
+        -   `L199`: `{iri("sub2"), typeIRI, iri("some:item"), nil},`
+        -   `L200`: `{iri("sub2"), iri("name"), quad.String("Sub 2"), nil},`
+        -   `L201`: `{quad.BNode("1234"), iri("items"), iri("sub2"), nil},`
+        -   `L217`: `{iri("1234"), typeIRI, iri("some:Type"), nil},`
+        -   `L218`: `{iri("1234"), iri("name"), quad.String("Sub 1"), nil},`
+        -   `L219`: `{iri("1234"), iri("spec"), quad.String("special"), nil},`
+        -   `L220`: `{iri("1234"), iri("values"), quad.String("val1"), nil},`
+        -   `L221`: `{iri("1234"), iri("values"), quad.String("val2"), nil},`
+        -   `L237`: `{iri("1234"), typeIRI, iri("some:Type"), nil},`
+        -   `L238`: `{iri("1234"), iri("name"), quad.String("Sub 1"), nil},`
+        -   `L239`: `{iri("1234"), iri("spec"), quad.String("special"), nil},`
+        -   `L240`: `{iri("1234"), iri("values"), quad.String("val1"), nil},`
+        -   `L241`: `{iri("1234"), iri("values"), quad.String("val2"), nil},`
+        -   `L349`: `{iri("1234"), iri("name"), quad.String("Obj"), nil},`
+        -   `L350`: `{iri("1234"), iri("num"), quad.Int(3), nil},`
+        -   `L360`: `{iri("1234"), iri("name"), quad.String("Obj"), nil},`
+        -   `L367`: `{iri("c1"), typeIRI, iri("ex:Coords"), nil},`
+        -   `L368`: `{iri("c1"), iri("ex:lat"), quad.Float(12.3), nil},`
+        -   `L369`: `{iri("c1"), iri("ex:lng"), quad.Float(34.5), nil},`
+        -   `L387`: `{iri("c1"), iri("name"), quad.String("A"), nil},`
+        -   `L388`: `{iri("c2"), iri("name"), quad.String("B"), nil},`
+        -   `L389`: `{iri("c1"), iri("next"), iri("c2"), nil},`
+        -   `L390`: `{iri("c1"), iri("prev"), iri("c2"), nil},`
+        -   `L403`: `{iri("c1"), iri("alt"), iri("h1"), nil},`
+        -   `L404`: `{iri("c1"), iri("alt"), iri("h2"), nil},`
+        -   `L405`: `{iri("c1"), iri("alt"), iri("h3"), nil},`
+        -   `L407`: `{iri("h1"), iri("one"), quad.String("A"), nil},`
+        -   `L408`: `{iri("h2"), iri("two"), quad.String("B"), nil},`
+        -   `L409`: `{iri("h3"), iri("one"), quad.String("C"), nil},`
+        -   `L410`: `{iri("h3"), iri("two"), quad.String("D"), nil},`
+-   **File:** `schema/schema_test.go`
+    -   `[ ]` **[U1000]** `field rdfType is unused`
+        -   `L19`: `rdfType struct{} `
+    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
+        -   `L147`: `{iri("n1"), iri("name"), quad.String("Node 1"), nil},`
+        -   `L148`: `{iri("n2"), iri("name"), quad.String("Node 2"), nil},`
+        -   `L149`: `{iri("n3"), iri("name"), quad.String("Node 3"), nil},`
+        -   `L150`: `{iri("n4"), iri("name"), quad.String("Node 4"), nil},`
+        -   `L151`: `{iri("n5"), iri("name"), quad.String("Node 5"), nil},`
+        -   `L153`: `{iri("n1"), iri("child"), iri("n2"), nil},`
+        -   `L154`: `{iri("n1"), iri("child"), iri("n3"), nil},`
+        -   `L156`: `{iri("n3"), iri("child"), iri("n4"), nil},`
+-   **File:** `schema/writer.go`
+    -   `[ ]` **[SA1019]** `w.w.WriteQuad is deprecated: use WriteQuads instead.`
+        -   `L36`: `return w.w.WriteQuad(quad.Quad{Subject: s, Predicate: p, Object: o, Label: w.c.Label})`
+    -   `[ ]` **[gocyclo]** `25: schema (*writer).writeAsQuads`
+        -   `L116`: `func (w *writer) writeAsQuads(rv reflect.Value) (quad.Value, error) {`
+    -   `[ ]` **[gocyclo]** `18: schema (*writer).writeValueAs`
+        -   `L61`: `func (w *writer) writeValueAs(id quad.Value, rv reflect.Value, pref string, rules fieldRules) error {`
+-   **File:** `schema/writer_test.go`
+    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
+        -   `L79`: `{iri("1234"), typeIRI, iri("some:Type"), nil},`
+        -   `L80`: `{iri("1234"), iri("name"), quad.String(`some item`), nil},`
+        -   `L81`: `{iri("1234"), iri("values"), quad.String(`val1`), nil},`
+        -   `L82`: `{iri("1234"), iri("values"), quad.String(`val2`), nil},`
+        -   `L84`: `{iri("sub1"), typeIRI, iri("some:item"), nil},`
+        -   `L85`: `{iri("sub1"), iri("name"), quad.String(`Sub 1`), nil},`
+        -   `L86`: `{iri("1234"), iri("items"), iri("sub1"), nil},`
+        -   `L88`: `{iri("sub2"), typeIRI, iri("some:item"), nil},`
+        -   `L89`: `{iri("sub2"), iri("name"), quad.String(`Sub 2`), nil},`
+        -   `L90`: `{iri("1234"), iri("items"), iri("sub2"), nil},`
+        -   `L92`: `{iri("sub3"), typeIRI, iri("some:item"), nil},`
+        -   `L93`: `{iri("sub3"), iri("name"), quad.String(`Sub 3`), nil},`
+        -   `L94`: `{iri("1234"), iri("sub"), iri("sub3"), nil},`
+        -   `L112`: `{iri("1234"), typeIRI, iri("some:Type"), nil},`
+        -   `L113`: `{iri("1234"), iri("name"), quad.String(`Sub 1`), nil},`
+        -   `L114`: `{iri("1234"), iri("spec"), quad.String(`special`), nil},`
+        -   `L115`: `{iri("1234"), iri("values"), quad.String(`val1`), nil},`
+        -   `L116`: `{iri("1234"), iri("values"), quad.String(`val2`), nil},`
+        -   `L134`: `{iri("1234"), typeIRI, iri("some:Type"), nil},`
+        -   `L135`: `{iri("1234"), iri("name"), quad.String("Sub 1"), nil},`
+        -   `L136`: `{iri("1234"), iri("spec"), quad.String("special"), nil},`
+        -   `L137`: `{iri("1234"), iri("values"), quad.String("val1"), nil},`
+        -   `L138`: `{iri("1234"), iri("values"), quad.String("val2"), nil},`
+        -   `L156`: `{iri("1234"), typeIRI, iri("some:Type"), nil},`
+        -   `L157`: `{iri("1234"), iri("name"), quad.String("Sub 1"), nil},`
+        -   `L158`: `{iri("1234"), iri("spec"), quad.String("special"), nil},`
+        -   `L159`: `{iri("1234"), iri("values"), quad.String("val1"), nil},`
+        -   `L160`: `{iri("1234"), iri("values"), quad.String("val2"), nil},`
+        -   `L175`: `{iri("1234"), iri("name"), quad.String("Obj"), nil},`
+        -   `L176`: `{iri("1234"), iri("num"), quad.Int(3), nil},`
+        -   `L188`: `{iri("1234"), iri("name"), quad.String("Obj"), nil},`
+        -   `L206`: `{iri("1234"), iri("name"), quad.String("Obj"), nil},`
+        -   `L207`: `{iri("1234"), iri("num"), quad.Int(3), nil},`
+        -   `L208`: `{iri("1234"), iri("num2"), quad.Int(4), nil},`
+        -   `L223`: `{iri("1"), iri("name"), quad.String("t"), nil},`
+        -   `L224`: `{iri("1"), iri("ts"), quad.Time(time.Unix(100, 0)), nil},`
+        -   `L236`: `{iri("n1"), iri("name"), quad.String("Node 1"), nil},`
+        -   `L251`: `{iri("n1"), iri("name"), quad.String("Node 1"), nil},`
+        -   `L252`: `{iri("n2"), iri("name"), quad.String("Node 2"), nil},`
+        -   `L253`: `{iri("n1"), iri("child"), iri("n2"), nil},`
+        -   `L262`: `{nil, typeIRI, iri("ex:Coords"), nil},`
+        -   `L263`: `{nil, iri("ex:lat"), quad.Float(12.3), nil},`
+        -   `L264`: `{nil, iri("ex:lng"), quad.Float(34.5), nil},`
+        -   `L277`: `{iri("A"), iri("name"), quad.String("Node A"), nil},`
+        -   `L278`: `{iri("A"), iri("next"), iri("A"), nil},`
+        -   `L296`: `{iri("A"), iri("name"), quad.String("Node A"), nil},`
+        -   `L297`: `{iri("B"), iri("name"), quad.String("Node B"), nil},`
+        -   `L298`: `{iri("C"), iri("name"), quad.String("Node C"), nil},`
+        -   `L299`: `{iri("C"), iri("next"), iri("A"), nil},`
+        -   `L300`: `{iri("B"), iri("next"), iri("C"), nil},`
+        -   `L301`: `{iri("A"), iri("next"), iri("B"), nil},`
+-   **File:** `server/http/accept.go`
+    -   `[ ]` **[S1003]** `should use strings.ContainsRune(" \t\"(),/:;<=>?@[]\\{}", rune(c)) instead`
+        -   `L45`: `isSeparator := strings.IndexRune(" \t\"(),/:;<=>?@[]\\{}", rune(c)) >= 0`
+    -   `[ ]` **[S1003]** `should use strings.ContainsRune(" \t\r\n", rune(c)) instead`
+        -   `L46`: `if strings.IndexRune(" \t\r\n", rune(c)) >= 0 {`
+-   **File:** `server/http/api_v2.go`
+    -   `[ ]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
+        -   `L24`: `import (`
+    -   `[ ]` **[gocyclo]** `19: cayleyhttp (*APIv2).ServeQuery`
+        -   `L495`: `func (api *APIv2) ServeQuery(w http.ResponseWriter, r *http.Request) {`
+-   **File:** `server/http/api_v2_test.go`
+    -   `[ ]` **[SA4006]** `this value of err is never used`
+        -   `L58`: `buf, err := newQuadsBuffer(quads)`

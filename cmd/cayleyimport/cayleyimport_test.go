@@ -19,11 +19,11 @@ import (
 )
 
 var expectData = []quad.Quad{
-	{quad.IRI("http://example.com/alice"), quad.IRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), quad.IRI("http://xmlns.com/foaf/0.1/Person"), quad.Value(nil)},
-	{quad.IRI("http://example.com/alice"), quad.IRI("http://xmlns.com/foaf/0.1/knows"), quad.IRI("http://example.com/bob"), nil},
-	{quad.IRI("http://example.com/alice"), quad.IRI("http://xmlns.com/foaf/0.1/name"), quad.String("Alice"), nil},
-	{quad.IRI("http://example.com/bob"), quad.IRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), quad.IRI("http://xmlns.com/foaf/0.1/Person"), nil},
-	{quad.IRI("http://example.com/bob"), quad.IRI("http://xmlns.com/foaf/0.1/knows"), quad.IRI("http://example.com/alice"), nil},
+	{Subject: quad.IRI("http://example.com/alice"), Predicate: quad.IRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), Object: quad.IRI("http://xmlns.com/foaf/0.1/Person"), Label: quad.Value(nil)},
+	{Subject: quad.IRI("http://example.com/alice"), Predicate: quad.IRI("http://xmlns.com/foaf/0.1/knows"), Object: quad.IRI("http://example.com/bob"), Label: nil},
+	{Subject: quad.IRI("http://example.com/alice"), Predicate: quad.IRI("http://xmlns.com/foaf/0.1/name"), Object: quad.String("Alice"), Label: nil},
+	{Subject: quad.IRI("http://example.com/bob"), Predicate: quad.IRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), Object: quad.IRI("http://xmlns.com/foaf/0.1/Person"), Label: nil},
+	{Subject: quad.IRI("http://example.com/bob"), Predicate: quad.IRI("http://xmlns.com/foaf/0.1/knows"), Object: quad.IRI("http://example.com/alice"), Label: nil},
 	{quad.IRI("http://example.com/bob"), quad.IRI("http://xmlns.com/foaf/0.1/name"), quad.String("Bob"), nil},
 }
 
