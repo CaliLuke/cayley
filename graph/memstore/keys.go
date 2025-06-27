@@ -525,7 +525,7 @@ func (t *Tree) overflow(p *x, q *d, pi, i int, k int64, v *Primitive) {
 // Seek returns an Enumerator positioned on a an item such that k >= item's
 // key. ok reports if k == item.key The Enumerator's position is possibly
 // after the last item in the tree.
-func (t *Tree) Seek(k int64) (e *Enumerator, ok bool) {
+func (t *Tree) seek(k int64) (e *Enumerator, ok bool) {
 	q := t.r
 	if q == nil {
 		e = btEPool.get(nil, false, 0, k, nil, t, t.ver)
@@ -551,6 +551,18 @@ func (t *Tree) Seek(k int64) (e *Enumerator, ok bool) {
 			return btEPool.get(nil, ok, i, k, x, t, t.ver), false
 		}
 	}
+}
+
+func (t *Tree) Seek(k int64, g int) (int64, error) {
+	e, ok := t.seek(k)
+	defer e.Close()
+	if !ok {
+		return 0, io.EOF
+	}
+	if e.q == nil {
+		return 0, io.EOF
+	}
+	return e.q.d[e.i].k, e.err
 }
 
 // SeekFirst returns an enumerator positioned on the first KV pair in the tree,
@@ -868,7 +880,7 @@ func (e *Enumerator) Next() (k int64, v *Primitive, err error) {
 	}
 
 	if e.ver != e.t.ver {
-		f, hit := e.t.Seek(e.k)
+		f, hit := e.t.seek(e.k)
 		if !e.hit && hit {
 			if err = f.next(); err != nil {
 				return
@@ -922,7 +934,7 @@ func (e *Enumerator) Prev() (k int64, v *Primitive, err error) {
 	}
 
 	if e.ver != e.t.ver {
-		f, hit := e.t.Seek(e.k)
+		f, hit := e.t.seek(e.k)
 		if !e.hit && hit {
 			if err = f.prev(); err != nil {
 				return

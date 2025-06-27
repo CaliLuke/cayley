@@ -15,22 +15,25 @@ This document outlines the systematic process for resolving all linting issues i
 
 1.  **Run Full Pre-Fix Test Suite:** Before applying any changes, run the **entire** project test suite sequentially to establish a clean baseline. The command must be `go test -p 1 ./...`. Capture the full terminal output.
 
-2.  **Apply the Fix:** Implement the code changes required to resolve the specific linting issue.
+2.  **Context-Driven Analysis:** Before implementing a fix, especially for complex issues, take time to analyze the related code and tests to fully understand the intended functionality. This context is crucial for developing a correct and robust solution.
 
-3.  **Run Full Post-Fix Test Suite:** After applying the fix, run the **entire** test suite again with `go test -p 1 ./...` to confirm the change has not introduced any regressions. Capture the full terminal output.
+3.  **Apply the Fix:** Implement the code changes required to resolve the specific linting issue.
 
-4.  **Commit the Verified Fix:** If the post-fix tests pass, commit the changes to version control. The commit message must be clear and descriptive (e.g., `fix(lint): Resolve SA1019 in cmd/cayley/command/repl.go`).
+4.  **Run Full Post-Fix Test Suite:** After applying the fix, run the **entire** test suite again with `go test -p 1 ./...` to confirm the change has not introduced any regressions. Capture the full terminal output.
+    *   **Efficient Testing Strategy:** When a code change causes a specific test to fail, the immediate focus should be on re-running and fixing that single test. Only after it passes should the full test suite be executed to ensure no broader regressions were introduced.
+
+5.  **Commit the Verified Fix:** If the post-fix tests pass, commit the changes to version control. The commit message must be clear and descriptive (e.g., `fix(lint): Resolve SA1019 in cmd/cayley/command/repl.go`).
     *   Run `git add .`
     *   Run `git commit -m "..."`
 
-5.  **Verify the Commit:** Immediately after committing, retrieve the last commit's title to ensure it was successful and matches the intended change.
+6.  **Verify the Commit:** Immediately after committing, retrieve the last commit's title to ensure it was successful and matches the intended change.
     *   Run `git log -1 --pretty=%s` and capture the output.
 
-6.  **Update Checklist and Batch Next Tasks:**
+7.  **Update Checklist and Batch Next Tasks:**
     *   For each completed issue in the batch, use a spot-editing tool (like `apply_diff`) to change `- [ ]` to `- [x]` in `AI/linting_checklist.md`. This is more efficient than rewriting the entire file.
     *   After updating the checklist, identify the next batch of tasks using the strict heuristic...
 
-7.  **Complete Task with Enhanced Reporting:** Signal completion by using the `attempt_completion` tool. The `result` parameter must be a JSON string with the following keys:
+8.  **Complete Task with Enhanced Reporting:** Signal completion by using the `attempt_completion` tool. The `result` parameter must be a JSON string with the following keys:
     *   `fix_summary`: A string summarizing the fix(es) that were just applied.
     *   `git_commit_title`: The title of the Git commit.
     *   `test_results_summary`: A JSON object with `pre_fix` and `post_fix` keys confirming the test suite passed.

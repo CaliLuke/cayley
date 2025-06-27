@@ -258,8 +258,7 @@ func benchmarkSeekSeq(b *testing.B, n int) {
 		debug.FreeOSMemory()
 		b.StartTimer()
 		for j := int64(0); j < int64(n); j++ {
-			e, _ := t.Seek(j)
-			e.Close()
+			t.Seek(j, 0)
 		}
 		b.StopTimer()
 		t.Close()
@@ -297,8 +296,7 @@ func benchmarkSeekRnd(b *testing.B, n int) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		for _, v := range a {
-			e, _ := r.Seek(v)
-			e.Close()
+			r.Seek(v, 0)
 		}
 	}
 	b.StopTimer()

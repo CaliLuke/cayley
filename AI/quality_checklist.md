@@ -57,7 +57,7 @@
     -   `[x]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
         -   `L18`: `import (`
 -   **File:** `graph/linksto_test.go`
-    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+    -   `[x]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
         -   `L31`: `object := quad.Raw("cool")`
 -   **File:** `graph/memstore/keys.go`
     -   `[ ]` **[vet]** `method Seek(k int64) (e *memstore.Enumerator, ok bool) should have signature Seek(int64, int) (int64, error)`
