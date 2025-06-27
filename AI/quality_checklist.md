@@ -54,7 +54,7 @@
         -   `L97`: `{Dir: quad.Object, Values: shape.Lookup{quad.Raw("F")}},`
         -   `L101`: `{Dir: quad.Object, Values: shape.Lookup{quad.Raw("F")}},`
 -   **File:** `graph/kv/leveldb/leveldb_test.go`
-    -   `[ ]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
+    -   `[x]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
         -   `L18`: `import (`
 -   **File:** `graph/linksto_test.go`
     -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`

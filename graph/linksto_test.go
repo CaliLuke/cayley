@@ -28,7 +28,7 @@ import (
 
 func TestLinksTo(t *testing.T) {
 	ctx := context.TODO()
-	object := quad.Raw("cool")
+	object := quad.String("cool")
 	q := quad.Quad{Subject: quad.IRI("alice"), Predicate: quad.IRI("is"), Object: object, Label: nil}
 	qs := &graphmock.Store{
 		Data: []quad.Quad{q},
