@@ -47,10 +47,10 @@
         -   `L1112`: `{quad.Time(t1), quad.Time(t2), quad.Time(t3), quad.Time(t4)},`
         -   `L1114`: `{quad.Int(math.MaxInt64), quad.Int(math.MaxInt64 - 1), quad.Int(math.MinInt64 + 1), quad.Int(math.MinInt64)},`
 -   **File:** `graph/kv/bbolt/bolt_test.go`
-    -   `[ ]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
+    -   `[x]` **[SA1019]** `"io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details.`
         -   `L18`: `import (`
 -   **File:** `graph/kv/kvtest/kvtest.go`
-    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+    -   `[x]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
         -   `L97`: `{Dir: quad.Object, Values: shape.Lookup{quad.Raw("F")}},`
         -   `L101`: `{Dir: quad.Object, Values: shape.Lookup{quad.Raw("F")}},`
 -   **File:** `graph/kv/leveldb/leveldb_test.go`
