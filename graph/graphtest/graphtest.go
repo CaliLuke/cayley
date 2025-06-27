@@ -432,7 +432,7 @@ func Test1K(t *testing.T, gen testutil.DatabaseFunc, c *Config) {
 	for i := 0; i < n; i++ {
 		q := quad.Make(i, i, i, nil)
 		exp = append(exp, q)
-		qw.WriteQuad(q)
+		qw.WriteQuads([]quad.Quad{q})
 	}
 	err = qw.Flush()
 	require.NoError(t, err)
@@ -577,7 +577,13 @@ func TestIterator(t testing.TB, gen testutil.DatabaseFunc, _ *Config) {
 	itc := it.Lookup()
 	defer itc.Close()
 	for _, pq := range expect {
-		qsv, err := qs.ValueOf(quad.Raw(pq))
+		var v quad.Value
+		if pq == "cool" {
+			v = quad.String(pq)
+		} else {
+			v = quad.IRI(pq)
+		}
+		qsv, err := qs.ValueOf(v)
 		require.NoError(t, err)
 		ok := itc.Contains(ctx, qsv)
 		require.NoError(t, itc.Err())
@@ -629,10 +635,10 @@ func TestHasA(t testing.TB, gen testutil.DatabaseFunc, conf *Config) {
 
 	var exp []quad.Value
 	for i := 0; i < 8; i++ {
-		exp = append(exp, quad.Raw("follows"))
+		exp = append(exp, quad.IRI("follows"))
 	}
 	for i := 0; i < 3; i++ {
-		exp = append(exp, quad.Raw("status"))
+		exp = append(exp, quad.IRI("status"))
 	}
 	ExpectIteratedValues(t, qs, it, exp, false)
 }
@@ -739,7 +745,7 @@ func TestDeleteQuad(t testing.TB, gen testutil.DatabaseFunc, _ *Config) {
 
 	w := testutil.MakeWriter(t, qs, opts, MakeQuadSet()...)
 
-	vn, err := qs.ValueOf(quad.Raw("E"))
+	vn, err := qs.ValueOf(quad.IRI("E"))
 	require.NoError(t, err)
 	require.NotNil(t, vn)
 
@@ -751,7 +757,7 @@ func TestDeleteQuad(t testing.TB, gen testutil.DatabaseFunc, _ *Config) {
 	err = w.RemoveQuad(quad.Make("E", "follows", "F", nil))
 	require.NoError(t, err)
 
-	qsv, err := qs.ValueOf(quad.Raw("E"))
+	qsv, err := qs.ValueOf(quad.IRI("E"))
 	require.NoError(t, err)
 	it = qs.QuadIterator(quad.Subject, qsv)
 	ExpectIteratedQuads(t, qs, it, nil, false)
@@ -780,7 +786,7 @@ func TestDeletedFromIterator(t testing.TB, gen testutil.DatabaseFunc, conf *Conf
 	w := testutil.MakeWriter(t, qs, opts, MakeQuadSet()...)
 
 	// Subject iterator.
-	qsv, err := qs.ValueOf(quad.Raw("E"))
+	qsv, err := qs.ValueOf(quad.IRI("E"))
 	require.NoError(t, err)
 	it := qs.QuadIterator(quad.Subject, qsv)
 
@@ -801,7 +807,7 @@ func TestLoadTypedQuads(t testing.TB, gen testutil.DatabaseFunc, conf *Config) {
 
 	values := []quad.Value{
 		quad.BNode("A"), quad.IRI("name"), quad.String("B"), quad.IRI("graph"),
-		quad.IRI("B"), quad.Raw("<type>"),
+		quad.IRI("B"), quad.IRI("<type>"),
 		quad.TypedString{Value: "10", Type: "int"},
 		quad.LangString{Value: "value", Lang: "en"},
 		quad.Int(-123456789),
@@ -811,13 +817,13 @@ func TestLoadTypedQuads(t testing.TB, gen testutil.DatabaseFunc, conf *Config) {
 	}
 
 	err := w.AddQuadSet([]quad.Quad{
-		{values[0], values[1], values[2], values[3]},
-		{values[4], values[5], values[6], nil},
-		{values[4], values[5], values[7], nil},
-		{values[0], values[1], values[8], nil},
-		{values[0], values[1], values[9], nil},
-		{values[0], values[1], values[10], nil},
-		{values[0], values[1], values[11], nil},
+		{Subject: values[0], Predicate: values[1], Object: values[2], Label: values[3]},
+		{Subject: values[4], Predicate: values[5], Object: values[6]},
+		{Subject: values[4], Predicate: values[5], Object: values[7]},
+		{Subject: values[0], Predicate: values[1], Object: values[8]},
+		{Subject: values[0], Predicate: values[1], Object: values[9]},
+		{Subject: values[0], Predicate: values[1], Object: values[10]},
+		{Subject: values[0], Predicate: values[11]},
 	})
 	require.NoError(t, err)
 	for _, pq := range values {
@@ -978,11 +984,11 @@ func TestIteratorsAndNextResultOrderA(t testing.TB, gen testutil.DatabaseFunc, c
 	require.NoError(t, err)
 	require.Equal(t, exp, st, "Unexpected quadstore size")
 
-	qsv, err := qs.ValueOf(quad.Raw("C"))
+	qsv, err := qs.ValueOf(quad.IRI("C"))
 	require.NoError(t, err)
 	fixed := iterator.NewFixed(qsv)
 
-	qsv, err = qs.ValueOf(quad.Raw("follows"))
+	qsv, err = qs.ValueOf(quad.IRI("follows"))
 	require.NoError(t, err)
 	fixed2 := iterator.NewFixed(qsv)
 
@@ -1002,7 +1008,7 @@ func TestIteratorsAndNextResultOrderA(t testing.TB, gen testutil.DatabaseFunc, c
 	val := outerAnd.Result()
 	qsn, err := qs.NameOf(val)
 	require.NoError(t, err)
-	require.Equal(t, quad.Raw("C"), qsn)
+	require.Equal(t, quad.IRI("C"), qsn)
 
 	var (
 		got    []string
@@ -1105,13 +1111,13 @@ func TestCompareTypedValues(t testing.TB, gen testutil.DatabaseFunc, conf *Confi
 	t4 := t1.Add(time.Hour * 24 * 365)
 
 	quads := []quad.Quad{
-		{quad.BNode("alice"), quad.BNode("bob"), quad.BNode("charlie"), quad.BNode("dani")},
-		{quad.IRI("alice"), quad.IRI("bob"), quad.IRI("charlie"), quad.IRI("dani")},
-		{quad.String("alice"), quad.String("bob"), quad.String("charlie"), quad.String("dani")},
-		{quad.Int(100), quad.Int(112), quad.Int(110), quad.Int(20)},
-		{quad.Time(t1), quad.Time(t2), quad.Time(t3), quad.Time(t4)},
+		{Subject: quad.BNode("alice"), Predicate: quad.BNode("bob"), Object: quad.BNode("charlie"), Label: quad.BNode("dani")},
+		{Subject: quad.IRI("alice"), Predicate: quad.IRI("bob"), Object: quad.IRI("charlie"), Label: quad.IRI("dani")},
+		{Subject: quad.String("alice"), Predicate: quad.String("bob"), Object: quad.String("charlie"), Label: quad.String("dani")},
+		{Subject: quad.Int(100), Predicate: quad.Int(112), Object: quad.Int(110), Label: quad.Int(20)},
+		{Subject: quad.Time(t1), Predicate: quad.Time(t2), Object: quad.Time(t3), Label: quad.Time(t4)},
 		// test precision as well
-		{quad.Int(math.MaxInt64), quad.Int(math.MaxInt64 - 1), quad.Int(math.MinInt64 + 1), quad.Int(math.MinInt64)},
+		{Subject: quad.Int(math.MaxInt64), Predicate: quad.Int(math.MaxInt64 - 1), Object: quad.Int(math.MinInt64 + 1), Label: quad.Int(math.MinInt64)},
 	}
 
 	err := w.AddQuadSet(quads)
@@ -1153,7 +1159,7 @@ func TestNodeDelete(t testing.TB, gen testutil.DatabaseFunc, conf *Config) {
 
 	w := testutil.MakeWriter(t, qs, opts, MakeQuadSet()...)
 
-	del := quad.Raw("D")
+	del := quad.IRI("D")
 
 	err := w.RemoveNode(del)
 	require.NoError(t, err)
@@ -1171,16 +1177,16 @@ func TestNodeDelete(t testing.TB, gen testutil.DatabaseFunc, conf *Config) {
 	ExpectIteratedQuads(t, qs, qs.QuadsAllIterator(), exp, true)
 
 	ExpectIteratedValues(t, qs, qs.NodesAllIterator(), []quad.Value{
-		quad.Raw("A"),
-		quad.Raw("B"),
-		quad.Raw("C"),
-		quad.Raw("E"),
-		quad.Raw("F"),
-		quad.Raw("G"),
-		quad.Raw("cool"),
-		quad.Raw("follows"),
-		quad.Raw("status"),
-		quad.Raw("status_graph"),
+		quad.IRI("A"),
+		quad.IRI("B"),
+		quad.IRI("C"),
+		quad.IRI("E"),
+		quad.IRI("F"),
+		quad.IRI("G"),
+		quad.String("cool"),
+		quad.IRI("follows"),
+		quad.IRI("status"),
+		quad.IRI("status_graph"),
 	}, true)
 }
 

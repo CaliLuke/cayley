@@ -1,16 +1,16 @@
 # Code Quality Improvement Checklist
 
 -   **File:** `cmd/cayleyimport/cayleyimport_test.go`
-    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
+    -   `[x]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
         -   `L22`: `{quad.IRI("http://example.com/alice"), quad.IRI("http://xmlns.com/foaf/0.1/knows"), quad.IRI("http://example.com/bob"), nil},`
         -   `L23`: `{quad.IRI("http://example.com/alice"), quad.IRI("http://xmlns.com/foaf/0.1/name"), quad.String("Alice"), nil},`
         -   `L24`: `{quad.IRI("http://example.com/bob"), quad.IRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), quad.IRI("http://xmlns.com/foaf/0.1/Person"), nil},`
         -   `L25`: `{quad.IRI("http://example.com/bob"), quad.IRI("http://xmlns.com/foaf/0.1/knows"), quad.IRI("http://example.com/alice"), nil},`
         -   `L26`: `{quad.IRI("http://example.com/bob"), quad.IRI("http://xmlns.com/foaf/0.1/name"), quad.String("Bob"), nil},`
 -   **File:** `graph/graphtest/graphtest.go`
-    -   `[ ]` **[SA1019]** `qw.WriteQuad is deprecated: use WriteQuads instead.`
+    -   `[x]` **[SA1019]** `qw.WriteQuad is deprecated: use WriteQuads instead.`
         -   `L435`: `qw.WriteQuad(q)`
-    -   `[ ]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
+    -   `[x]` **[SA1019]** `quad.Raw is deprecated: use IRI or String instead.`
         -   `L580`: `qsv, err := qs.ValueOf(quad.Raw(pq))`
         -   `L632`: `exp = append(exp, quad.Raw("follows"))`
         -   `L635`: `exp = append(exp, quad.Raw("status"))`
@@ -32,7 +32,7 @@
         -   `L1181`: `quad.Raw("follows"),`
         -   `L1182`: `quad.Raw("status"),`
         -   `L1183`: `quad.Raw("status_graph"),`
-    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
+    -   `[x]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
         -   `L814`: `{values[0], values[1], values[2], values[3]},`
         -   `L815`: `{values[4], values[5], values[6], nil},`
         -   `L816`: `{values[4], values[5], values[7], nil},`
