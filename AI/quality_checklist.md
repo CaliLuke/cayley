@@ -1,135 +1,57 @@
-# Code Quality Improvement Checklist
+# Quality Checklist
 
--   **File:** `cmd/cayleyimport/cayleyimport_test.go`
-    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L27`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
--   **File:** `schema/loader_test.go`
-    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L21`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L22`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L45`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L46`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L47`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L48`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L49`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L50`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L158`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L159`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L160`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L161`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L162`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L163`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L164`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L165`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L166`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L167`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L168`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L169`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L170`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L171`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L192`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L193`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L194`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L195`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L196`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L197`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L198`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L199`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L200`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L201`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L217`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L218`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L219`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L220`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L221`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L237`: `github.com.cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L238`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L239`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L240`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L241`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L349`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L350`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L360`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L367`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L368`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L369`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L387`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L388`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L389`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L390`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L403`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L404`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L405`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L407`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L408`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L409`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L410`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
--   **File:** `schema/schema_test.go`
-    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L147`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L148`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L149`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L150`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L151`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L153`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L154`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L156`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
--   **File:** `schema/writer_test.go`
-    -   `[ ]` **[vet]** `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L79`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L80`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L81`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L82`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L84`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L85`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L86`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L88`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L89`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L90`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L92`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L93`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L94`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L112`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L113`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L114`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L115`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L116`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L134`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L135`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L136`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L137`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L138`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L156`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L157`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L158`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L159`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L160`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L175`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L176`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L188`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L206`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L207`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L208`:.github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L223`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L224`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L236`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L251`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L252`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L253`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L262`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L263`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L264`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L277`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L278`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L296`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L297`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L298`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L299`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L300`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
-        -   `L301`: `github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields`
--   **File:** `query/gizmo/environ.go`
-    -   `[ ]` **[vet]** `unreachable code`
-        -   `L431`: `unreachable code`
--   **File:** `graph/memstore/keys.go`
-    -   `[ ]` **[vet]** `method Seek(k int64) (e *memstore.Enumerator, ok bool) should have signature Seek(int64, int) (int64, error)`
-        -   `L528`: `method Seek(k int64) (e *memstore.Enumerator, ok bool) should have signature Seek(int64, int) (int64, error)`
+This document outlines the results of the quality checks performed on the codebase.
+
+## `go vet` Results
+
+### Unkeyed struct literals: `github.com/cayleygraph/quad.Quad`
+
+The following files contain struct literals that use unkeyed fields:
+
+- **`graph/graphtest/graphtest.go`**: 814, 815, 816, 817, 818, 819, 820, 1108, 1109, 1110, 1111, 1112, 1114
+- **`schema/loader_test.go`**: 21, 22, 45, 46, 47, 48, 49, 50, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 217, 218, 219, 220, 221, 237, 238, 239, 240, 241, 349, 350, 360, 367, 368, 369, 387, 388, 389, 390, 403, 404, 405, 407, 408, 409, 410
+- **`schema/schema_test.go`**: 147, 148, 149, 150, 151, 153, 154, 156
+- **`schema/writer_test.go`**: 79, 80, 81, 82, 84, 85, 86, 88, 89, 90, 92, 93, 94, 112, 113, 114, 115, 116, 134, 135, 136, 137, 138, 156, 157, 158, 159, 160, 175, 176, 188, 206, 207, 208, 223, 224, 236, 251, 252, 253, 262, 263, 264, 277, 278, 296, 297, 298, 299, 300, 301
+
+### Incorrect Method Signature
+
+- **`graph/memstore/keys.go:528:16`**: `method Seek(k int64) (e *memstore.Enumerator, ok bool)` should have signature `Seek(int64, int) (int64, error)`
+
+## `gocyclo` Results
+
+The following functions have a cyclomatic complexity over 15:
+
+| Complexity | Function                       | Location                                |
+|------------|--------------------------------|-----------------------------------------|
+| 61         | `graphql.iterateObject`        | `query/graphql/graphql.go:156:1`        |
+| 46         | `shape.(Intersect).Optimize`   | `query/shape/shape.go:935:1`            |
+| 40         | `linkedql.Unmarshal`           | `query/linkedql/registry.go:64:1`       |
+| 38         | `schema.(*loader).loadIteratorToDepth` | `schema/loader.go:424:1`                |
+| 36         | `schema.(*loader).loadToValue` | `schema/loader.go:293:1`                |
+| 32         | `schema.(*loader).makePathForType` | `schema/loader.go:171:1`                |
+| 31         | `repl.Repl`                    | `internal/repl/repl.go:92:1`            |
+| 27         | `kv.(*QuadStore).ApplyDeltas`  | `graph/kv/indexing.go:563:1`            |
+| 26         | `nosql.toQuadValue`            | `graph/nosql/quadstore.go:523:1`        |
+| 25         | `schema.(*writer).writeAsQuads`| `schema/writer.go:116:1`                |
+| 25         | `nosql.(*QuadStore).ApplyDeltas` | `graph/nosql/quadstore.go:378:1`        |
+| 24         | `sql.(*QuadStore).ApplyDeltas` | `graph/sql/quadstore.go:384:1`          |
+| 22         | `schema.(*Config).fieldRule`   | `schema/schema.go:130:1`                |
+| 22         | `sexp.buildShape`              | `query/sexp/parser.go:203:1`            |
+| 22         | `mql.(*Query).treeifyResult`   | `query/mql/fill.go:25:1`                |
+| 22         | `internal.QuadReaderFor`       | `internal/load.go:45:1`                 |
+| 22         | `sql.(*QuadStore).NameOf`      | `graph/sql/quadstore.go:603:1`          |
+| 21         | `graphql.convField`            | `query/graphql/graphql.go:497:1`        |
+| 20         | `shape.(NodesFrom).Optimize`   | `query/shape/shape.go:536:1`            |
+| 20         | `gaedatastore.(*QuadStore).ApplyDeltas` | `graph/gaedatastore/quadstore.go:197:1` |
+| 19         | `cayleyhttp.(*APIv2).ServeQuery` | `server/http/api_v2.go:495:1`           |
+| 19         | `kv.(*allIteratorNext).Next`   | `graph/kv/all_iterator.go:131:1`        |
+| 18         | `schema.(*writer).writeValueAs`| `schema/writer.go:61:1`                 |
+| 18         | `sqlite.runTxSqlite`           | `graph/sql/sqlite/sqlite.go:57:1`       |
+| 18         | `postgres.RunTx`               | `graph/sql/postgres/postgres.go:114:1`  |
+| 18         | `mysql.runTxMysql`             | `graph/sql/mysql/mysql.go:45:1`         |
+| 18         | `cockroach.runTxCockroach`     | `graph/sql/cockroach/cockroach.go:140:1`|
+| 18         | `kv.(*QuadStore).flushMapBucket` | `graph/kv/indexing.go:976:1`            |
+| 16         | `graphql.convValue`            | `query/graphql/graphql.go:563:1`        |
+| 16         | `gizmo.cmpRegexp`              | `query/gizmo/environ.go:186:1`          |
+| 16         | `sql.(*Optimizer).optimizeIntersect` | `graph/sql/optimizer.go:495:1`          |
+| 16         | `kv.(*quadIteratorNext).Next`  | `graph/kv/quad_iterator.go:162:1`       |

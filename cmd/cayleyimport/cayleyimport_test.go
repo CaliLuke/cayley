@@ -24,7 +24,7 @@ var expectData = []quad.Quad{
 	{Subject: quad.IRI("http://example.com/alice"), Predicate: quad.IRI("http://xmlns.com/foaf/0.1/name"), Object: quad.String("Alice"), Label: nil},
 	{Subject: quad.IRI("http://example.com/bob"), Predicate: quad.IRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), Object: quad.IRI("http://xmlns.com/foaf/0.1/Person"), Label: nil},
 	{Subject: quad.IRI("http://example.com/bob"), Predicate: quad.IRI("http://xmlns.com/foaf/0.1/knows"), Object: quad.IRI("http://example.com/alice"), Label: nil},
-	{quad.IRI("http://example.com/bob"), quad.IRI("http://xmlns.com/foaf/0.1/name"), quad.String("Bob"), nil},
+	{Subject: quad.IRI("http://example.com/bob"), Predicate: quad.IRI("http://xmlns.com/foaf/0.1/name"), Object: quad.String("Bob"), Label: nil},
 }
 
 func allQuads(t testing.TB, qs graph.QuadStore) []quad.Quad {

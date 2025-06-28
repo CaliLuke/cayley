@@ -45,11 +45,11 @@ After an initial linting pass, a deeper analysis will be performed to guide the 
 
 2.  **Generate Grouped Checklist:** A second subtask will parse the raw report and generate a new, intelligent checklist named `AI/quality_checklist.md`. This checklist must group related issues to optimize the fixing process. The format should be as follows:
 
-    -   **File:** `path/to/file.go`
-        -   `[ ]` **[Error Code]** `Error Message`
-            -   `L{line_number}`: `code snippet`
-            -   `L{line_number}`: `code snippet`
-            -   ...
+    -   **`go vet` Results:**
+        -   Issues are grouped by error type.
+        -   For each error type, the affected files are listed with the corresponding line numbers.
+    -   **`gocyclo` Results:**
+        -   Results are presented in a markdown table with columns for Complexity, Function, and Location.
 
 ## General Directives
 

@@ -1,6 +1,20 @@
-# github.com/cayleygraph/cayley/cmd/cayleyimport
-# [github.com/cayleygraph/cayley/cmd/cayleyimport]
-cmd/cayleyimport/cayleyimport_test.go:27:2: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+# github.com/cayleygraph/cayley/query/gizmo
+# [github.com/cayleygraph/cayley/query/gizmo]
+query/gizmo/environ.go:431:2: unreachable code
+# github.com/cayleygraph/cayley/graph/graphtest
+graph/graphtest/graphtest.go:814:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:815:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:816:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:817:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:818:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:819:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:820:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:1108:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:1109:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:1110:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:1111:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:1112:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
+graph/graphtest/graphtest.go:1114:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
 # github.com/cayleygraph/cayley/schema_test
 # [github.com/cayleygraph/cayley/schema_test]
 schema/loader_test.go:21:3: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
@@ -121,10 +135,6 @@ schema/writer_test.go:298:4: github.com/cayleygraph/quad.Quad struct literal use
 schema/writer_test.go:299:4: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
 schema/writer_test.go:300:4: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
 schema/writer_test.go:301:4: github.com/cayleygraph/quad.Quad struct literal uses unkeyed fields
-# github.com/cayleygraph/cayley/query/gizmo
-# [github.com/cayleygraph/cayley/query/gizmo]
-query/gizmo/environ.go:431:2: unreachable code
 # github.com/cayleygraph/cayley/graph/memstore
 # [github.com/cayleygraph/cayley/graph/memstore]
 graph/memstore/keys.go:528:16: method Seek(k int64) (e *memstore.Enumerator, ok bool) should have signature Seek(int64, int) (int64, error)
-zsh: command not found: gocyclo
